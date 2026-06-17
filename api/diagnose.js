@@ -1,24 +1,19 @@
 import 'dotenv/config';
-import express from 'express';
 import { DiagnosisAgent } from '../src/agents/DiagnosisAgent.js';
 
-const app = express();
-app.use(express.json({ limit: '256kb' }));
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-const PORT = process.env.PORT ? Number(process.env.PORT) : 5174;
-const HF_TOKEN = process.env.HF_TOKEN;
-const HF_MODEL = process.env.HF_MODEL || 'DrSyedFaizan/medReport';
-
-app.get('/api/health', (_req, res) => {
-  res.json({ ok: true });
-});
-
-app.post('/api/diagnose', async (req, res) => {
   try {
-    const inputs = (req.body?.inputs ?? '').toString().trim();
-    if (inputs.length < 3) {
+    const inputs = String(req.body?.inputs ?? '').trim();
+    if (!inputs) {
       return res.status(400).json({ error: 'Please provide symptom text.' });
     }
+
+    const HF_TOKEN = process.env.HF_TOKEN;
+    const HF_MODEL = process.env.HF_MODEL || 'DrSyedFaizan/medReport';
 
     let diseaseLabel = null;
     let confidence = null;
@@ -64,19 +59,8 @@ app.post('/api/diagnose', async (req, res) => {
       console.warn('[api/diagnose] Hugging Face failed, using offline fallback:', hfErr?.message || hfErr);
     }
 
-    return res.json({
-      diseaseLabel,
-      confidence,
-      raw,
-      model,
-      source,
-    });
+    return res.status(200).json({ diseaseLabel, confidence, raw, model, source });
   } catch (err) {
     return res.status(500).json({ error: err?.message || 'Server error' });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`[api] listening on http://localhost:${PORT}`);
-});
-
+}
