@@ -6,7 +6,7 @@ import Services from './Components/Services/Services'
 import HowItWorks from './Components/HowItWorks/HowItWorks'
 import GetToKnow from './Components/GetToKnow/GetToKnow'
 import Testimonials from './Components/Testimonials/Testimonials'
-import FAQS from './Components/Faqs/Faqs'
+import FAQS from './Components/FAQS/FAQS'
 import Footer from './Components/Footer/Footer'
 
 

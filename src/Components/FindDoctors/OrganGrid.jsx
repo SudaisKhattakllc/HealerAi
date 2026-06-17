@@ -23,7 +23,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import HowItWorks from "../HowItWorks/HowItWorks";
 import Testimonials from "../Testimonials/Testimonials";
-import FAQS from "../Faqs/Faqs";
+import FAQS from "../FAQS/FAQS";
 
 // Map specialties to their images
 const specialtyImageMap = {
