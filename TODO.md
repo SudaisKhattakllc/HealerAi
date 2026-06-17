@@ -1,0 +1,5 @@
+- [ ] Add onClose prop to LogIn component
+- [ ] Import IconX from @tabler/icons-react
+- [ ] Convert Login.jsx to modal style with backdrop and blur like Signin.jsx
+- [ ] Add close button in top right
+- [ ] Test the updated Login modal
